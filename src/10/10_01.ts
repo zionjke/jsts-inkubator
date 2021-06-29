@@ -22,6 +22,14 @@ export type UserWithCompanies = UserType2 & {
     companies: Array<{ id: number, title: string }>
 }
 
+export type CompanyType = {
+    id:number
+    title:string
+}
+
+export type CompaniesType = {
+    [key:string]: Array<CompanyType>
+}
 
 export function makeHairStyle(u: UserType2, power: number) {
     const uCopy = {
@@ -97,16 +105,13 @@ export function updateCompanyTitle(user: UserWithCompanies, companyID: number, n
     }
 }
 
-export function updateCompanyTitle2(companies: any, companyId: number, newTitle: string, key: string) {
+export function updateCompanyTitle2(companies: CompaniesType, companyId: number, newTitle: string, key: string) {
     return {
         ...companies,
-        [key]: companies[key].map(c => c.id === companyId ? {...c, title: newTitle} : c)
+        [key]: companies[key].map((c:CompanyType) => c.id === companyId ? {...c, title: newTitle} : c)
     }
 }
 
-let companies = {
-    'Artem': [{id: 1, title: 'Epam'}],
-    'Dimych': [{id: 2, title: 'KLO'}]
-}
+
 
 

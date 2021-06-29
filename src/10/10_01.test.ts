@@ -1,7 +1,16 @@
 import {
-    addNewBooksToUser, makeHairStyle, moveUser, takeLaptopToUser, upgradeUserLaptop,
+    addNewBooksToUser,
+    makeHairStyle,
+    moveUser,
+    removeBook,
+    takeLaptopToUser,
+    updateBook,
+    updateCompanyTitle2,
+    upgradeUserLaptop,
     UserWithBooks
-    , UserWithCompanies, UserWithLaptop
+    ,
+    UserWithCompanies,
+    UserWithLaptop
 } from "./10_01"
 
 
@@ -27,6 +36,8 @@ test('test1', () => {
     const userWithNewLaptop = takeLaptopToUser(user, 'asus')
     const userWithMacbook = upgradeUserLaptop(user, 'Macbook')
     const userWithBooks = addNewBooksToUser(user, ['3', '4'])
+    const userWithNewBooks = updateBook(user, '1', '7')
+    const filteredBooks = removeBook(user,'2')
 
     expect(cutUser.hair).toBe(16)
     expect(user.hair).toBe(32)
@@ -36,6 +47,8 @@ test('test1', () => {
     expect(userWithNewLaptop.laptop.title).toBe('asus')
     expect(userWithMacbook.laptop.title).toBe('Macbook')
     expect(userWithBooks.books[2]).toBe('3')
+    expect(userWithNewBooks.books[0]).toBe('7')
+    expect(filteredBooks.books.length).toBe(1)
 })
 
 
@@ -47,14 +60,8 @@ test('second test', () => {
         'Dimych': [{id: 2, title: 'KLO'}]
     }
 
-    function updateCompanyTitle2(companies: any, companyId: number, newTitle: string, key: string) {
-        return {
-            ...companies,
-            [key]: companies[key].map(c => c.id === companyId ? {...c, title: newTitle} : c)
-        }
-    }
 
-    const newCompanyTitle = updateCompanyTitle2(companies,1,'SILPO','Artem')
+    const newCompanyTitle = updateCompanyTitle2(companies, 1, 'SILPO', 'Artem')
     expect(newCompanyTitle['Artem'][0].title).toBe('SILPO')
 
 })
